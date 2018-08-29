@@ -33,11 +33,21 @@ module.exports = function (config) {
        * except that `input` is handled for you.
        */
       plugins: [
+        require('rollup-plugin-replace')({
+          'process.env.NODE_ENV': JSON.stringify('production')
+        }),
         require('rollup-plugin-vue')(),
         require('rollup-plugin-node-resolve')({
           browser: true,
           jsnext: true,
           main: true
+        }),
+        require('rollup-plugin-commonjs')({
+          namedExports: {
+            '@vue/test-utils': [
+              'mount'
+            ]
+          }
         })
       ],
       output: {
